@@ -9,25 +9,16 @@
  */
 
 import React from 'react';
-import {StyleSheet, View, Text, StatusBar} from 'react-native';
+import {StatusBar} from 'react-native';
+import AnimatedScreen from './src/AnimatedScreen';
 
 const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.content}>
-        <Text>Hello world!</Text>
-      </View>
+      <AnimatedScreen />
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;
