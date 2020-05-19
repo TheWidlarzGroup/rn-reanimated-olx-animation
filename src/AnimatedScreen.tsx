@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import Animated, {
   cond,
   lessThan,
@@ -20,13 +20,15 @@ import Animated, {
   debug,
   call,
 } from 'react-native-reanimated';
-import {
-  PanGestureHandler,
-  State,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
+import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import {theme} from './Theme';
 import CircleBg from './components/CircleBg';
+import Title from './components/Title';
+import CustomText from './components/CustomText';
+import Button from './components/Button';
+import ArrowDown from './components/ArrowDown';
+
+const {height} = Dimensions.get('window');
 
 const {Value, event} = Animated;
 
@@ -104,10 +106,30 @@ const AnimatedScreen = () => {
   return (
     <View style={styles.content}>
       <CircleBg />
-      <Text>hi there</Text>
+
+      <Image
+        resizeMode="contain"
+        style={styles.xBg}
+        source={require('../assets/xBg.png')}
+      />
+
+      <Title>{"Hello there! It's\nnew app!"}</Title>
+
+      <CustomText>
+        {`See it finished in your mind before\nyou ever start. There he comes. I thought
+        today we would do a happy little animation!`}
+      </CustomText>
+
+      <CustomText>
+        There he comes. I thought today we would do a happy little animation!
+      </CustomText>
+
+      <Button>Click me now</Button>
+
+      <ArrowDown />
+
       <PanGestureHandler
         onGestureEvent={dragHandler}
-        // onGestureEvent={(e:PanGestureHandlerGestureEvent) =>{e.nativeEvent.}}
         onHandlerStateChange={dragHandler}>
         <Animated.View
           style={[
@@ -130,6 +152,13 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     backgroundColor: 'red',
+  },
+  xBg: {
+    position: 'absolute',
+    height: height,
+    width: height,
+    transform: [{scale: 0.4}],
+    opacity: 0.4,
   },
 });
 

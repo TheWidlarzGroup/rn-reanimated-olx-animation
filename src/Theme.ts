@@ -7,4 +7,16 @@ export const theme = {
     light: '#DCE0E3',
     dark: '#082F35',
   },
+  sizes: {
+    big: 38,
+    medium: 18,
+    regular: 14,
+  },
+  spacing: {
+    unit: 8,
+  },
+  fonts: {
+    primary: 'Montserrat-Regular',
+    bold: 'Montserrat-Bold',
+  },
 };
