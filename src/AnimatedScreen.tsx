@@ -25,6 +25,8 @@ import {
   State,
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
+import {theme} from './Theme';
+import CircleBg from './components/CircleBg';
 
 const {Value, event} = Animated;
 
@@ -101,6 +103,7 @@ const AnimatedScreen = () => {
 
   return (
     <View style={styles.content}>
+      <CircleBg />
       <Text>hi there</Text>
       <PanGestureHandler
         onGestureEvent={dragHandler}
@@ -121,6 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: theme.colors.light,
   },
   box: {
     width: 50,
