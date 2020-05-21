@@ -21,6 +21,8 @@ import Animated, {
   debug,
   call,
   Extrapolate,
+  abs,
+  color,
 } from 'react-native-reanimated';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import {theme} from './Theme';
@@ -29,13 +31,19 @@ import Title from './components/Title';
 import CustomText from './components/CustomText';
 import Button from './components/Button';
 import ArrowDown from './components/ArrowDown';
+import {interpolateColor} from 'react-native-redash';
 
-const {height, width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 const {Value, event} = Animated;
 
+const expandedTarget = -height * 0.3;
+const dragTreshold = -height * 0.3;
+const velocityTrigerringTreshold = -2000;
+
 const runSpring = (
-  value: Animated.Adaptable<number>,
+  value: Animated.Value<number>,
+  dragCompensator: Animated.Value<number>,
   vel: Animated.Adaptable<number>,
   clock: Animated.Clock,
   dragState: Animated.Value<number>,
@@ -51,7 +59,7 @@ const runSpring = (
     toValue: new Value(0),
     damping: 10,
     mass: 0.4,
-    stiffness: 80,
+    stiffness: 50,
     overshootClamping: false,
     restSpeedThreshold: 0.001,
     restDisplacementThreshold: 0.001,
@@ -72,16 +80,46 @@ const runSpring = (
           [
             set(state.finished, 0),
             set(state.time, 0),
-            // set(state.position, value),
             set(
               state.position,
-              interpolate(value, {
-                inputRange: [-2, 2],
-                outputRange: [-0.3, 0.3],
-              }),
+              add(
+                dragCompensator,
+                interpolate(value, {
+                  inputRange: [-2, 2],
+                  outputRange: [-0.5, 0.5],
+                }),
+              ),
             ),
             set(state.velocity, vel),
-            set(config.toValue, 0),
+            set(config.toValue, dragCompensator),
+            // CHECK FOR TRESHOLD
+            // IF LESS THAN TRESHOLD and dragComp === 0
+            cond(
+              or(
+                lessThan(vel, velocityTrigerringTreshold),
+                and(eq(dragCompensator, 0), lessThan(value, dragTreshold)),
+              ),
+              [
+                debug('First cond', new Value(0)),
+                set(config.toValue, expandedTarget),
+                set(dragCompensator, expandedTarget),
+              ],
+            ),
+            // IF MORE THAN TRESHOLD and dragComp !== 0
+            cond(
+              or(
+                greaterThan(vel, abs(velocityTrigerringTreshold)),
+                and(
+                  neq(dragCompensator, 0),
+                  greaterThan(value, abs(dragTreshold)),
+                ),
+              ),
+              [
+                debug('Second cond', new Value(0)),
+                set(config.toValue, 0),
+                set(dragCompensator, 0),
+              ],
+            ),
             debug(`Start clock`, startClock(clock)),
           ],
         ),
@@ -89,22 +127,53 @@ const runSpring = (
         spring(clock, state, config),
         state.position,
       ],
-      interpolate(value, {
-        inputRange: [-2, 2],
-        outputRange: [-0.3, 0.3],
-      }),
-      // value,
+      [
+        debug('dragY: ', value),
+        add(
+          dragCompensator,
+          interpolate(value, {
+            inputRange: [-2, 2],
+            outputRange: [-0.5, 0.5],
+          }),
+        ),
+      ],
     ),
   ]);
 };
 
 const AnimatedScreen = () => {
   const [dragY] = useState(new Value(0));
+  const [dragCompensator] = useState(new Value(0));
   const [velocity] = useState(new Value(0));
   const [state] = useState(new Value(0));
   const [clock] = useState(new Animated.Clock());
 
-  const spring = runSpring(dragY, velocity, clock, state);
+  const spring = runSpring(dragY, dragCompensator, velocity, clock, state);
+
+  const springReversed = interpolate(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [0, -expandedTarget * 0.5],
+  });
+
+  const opacity = interpolate(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [1, 0],
+  });
+
+  const opacityReversed = interpolate(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [0, 1],
+  });
+
+  const scale = interpolate(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [1, 0],
+  });
+
+  const backgroundColor = interpolateColor(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [theme.colors.white, theme.colors.light],
+  });
 
   const dragHandler = event([
     {
@@ -117,12 +186,12 @@ const AnimatedScreen = () => {
   ]);
 
   return (
-    <View style={styles.content}>
-      <CircleBg />
+    <Animated.View style={[styles.content, {backgroundColor}]}>
+      <CircleBg opacity={opacityReversed} />
 
-      <Image
+      <Animated.Image
         resizeMode="contain"
-        style={styles.xBg}
+        style={[styles.xBg, {opacity, transform: [{scale}]}]}
         source={require('../assets/xBg.png')}
       />
 
@@ -131,7 +200,10 @@ const AnimatedScreen = () => {
         onHandlerStateChange={dragHandler}>
         <Animated.View style={[styles.scrollBox]}>
           <Animated.View
-            style={[styles.primaryScreen, {transform: [{translateY: spring}]}]}>
+            style={[
+              styles.primaryScreen,
+              {transform: [{translateY: spring}], opacity: opacityReversed},
+            ]}>
             <Title>{"Hello there! It's\nnew app!"}</Title>
 
             <CustomText>
@@ -142,7 +214,11 @@ const AnimatedScreen = () => {
             <ArrowDown />
           </Animated.View>
 
-          <View style={styles.secondaryScreen}>
+          <Animated.View
+            style={[
+              styles.secondaryScreen,
+              {transform: [{translateY: springReversed}], opacity},
+            ]}>
             <Title>{'Another screen'}</Title>
 
             <CustomText>
@@ -151,10 +227,10 @@ const AnimatedScreen = () => {
             </CustomText>
 
             <Button>Click me now</Button>
-          </View>
+          </Animated.View>
         </Animated.View>
       </PanGestureHandler>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -180,15 +256,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: 0.4,
-    transform: [{translateY: height * 0.3}],
   },
   xBg: {
     position: 'absolute',
     height: height,
     width: height,
-    transform: [{scale: 0.4}],
-    opacity: 0.4,
   },
 });
 

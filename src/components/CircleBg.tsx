@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
+import Animated from 'react-native-reanimated';
 import {theme} from '../Theme';
 
 const {height} = Dimensions.get('window');
@@ -7,8 +8,12 @@ const {height} = Dimensions.get('window');
 const bgDimension = height;
 const borderWidth = height * 0.25;
 
-const CircleBg = () => {
-  return <View style={styles.circleOuter} />;
+interface Props {
+  opacity: any;
+}
+
+const CircleBg = ({opacity}: Props) => {
+  return <Animated.View style={[styles.circleOuter, {opacity}]} />;
 };
 
 const styles = StyleSheet.create({
