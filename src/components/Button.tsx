@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {theme} from '../Theme';
 
 interface IProps {
@@ -8,9 +8,11 @@ interface IProps {
 
 const Button = ({children}: IProps) => {
   return (
-    <View style={styles.button}>
-      <Text style={styles.buttonText}>{children}</Text>
-    </View>
+    <TouchableOpacity onPress={() => console.log('clicked')}>
+      <View style={styles.button}>
+        <Text style={styles.buttonText}>{children}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

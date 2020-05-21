@@ -5,6 +5,7 @@ import Animated, {
   lessThan,
   multiply,
   greaterThan,
+  interpolate,
   sub,
   set,
   spring,
@@ -19,6 +20,7 @@ import Animated, {
   or,
   debug,
   call,
+  Extrapolate,
 } from 'react-native-reanimated';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import {theme} from './Theme';
@@ -28,7 +30,7 @@ import CustomText from './components/CustomText';
 import Button from './components/Button';
 import ArrowDown from './components/ArrowDown';
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 const {Value, event} = Animated;
 
@@ -70,7 +72,14 @@ const runSpring = (
           [
             set(state.finished, 0),
             set(state.time, 0),
-            set(state.position, value),
+            // set(state.position, value),
+            set(
+              state.position,
+              interpolate(value, {
+                inputRange: [-2, 2],
+                outputRange: [-0.3, 0.3],
+              }),
+            ),
             set(state.velocity, vel),
             set(config.toValue, 0),
             debug(`Start clock`, startClock(clock)),
@@ -80,7 +89,11 @@ const runSpring = (
         spring(clock, state, config),
         state.position,
       ],
-      value,
+      interpolate(value, {
+        inputRange: [-2, 2],
+        outputRange: [-0.3, 0.3],
+      }),
+      // value,
     ),
   ]);
 };
@@ -113,29 +126,33 @@ const AnimatedScreen = () => {
         source={require('../assets/xBg.png')}
       />
 
-      <Title>{"Hello there! It's\nnew app!"}</Title>
-
-      <CustomText>
-        {`See it finished in your mind before\nyou ever start. There he comes. I thought
-        today we would do a happy little animation!`}
-      </CustomText>
-
-      <CustomText>
-        There he comes. I thought today we would do a happy little animation!
-      </CustomText>
-
-      <Button>Click me now</Button>
-
-      <ArrowDown />
-
       <PanGestureHandler
         onGestureEvent={dragHandler}
         onHandlerStateChange={dragHandler}>
-        <Animated.View
-          style={[
-            styles.box,
-            {transform: [{translateY: spring}]},
-          ]}></Animated.View>
+        <Animated.View style={[styles.scrollBox]}>
+          <Animated.View
+            style={[styles.primaryScreen, {transform: [{translateY: spring}]}]}>
+            <Title>{"Hello there! It's\nnew app!"}</Title>
+
+            <CustomText>
+              {`See it finished in your mind before\nyou ever start. There he comes. I thought
+        today we would do a happy little animation!`}
+            </CustomText>
+
+            <ArrowDown />
+          </Animated.View>
+
+          <View style={styles.secondaryScreen}>
+            <Title>{'Another screen'}</Title>
+
+            <CustomText>
+              There it comes. I thought today we would do a happy little
+              animation!
+            </CustomText>
+
+            <Button>Click me now</Button>
+          </View>
+        </Animated.View>
       </PanGestureHandler>
     </View>
   );
@@ -148,10 +165,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.light,
   },
-  box: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'red',
+  scrollBox: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  primaryScreen: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  secondaryScreen: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.4,
+    transform: [{translateY: height * 0.3}],
   },
   xBg: {
     position: 'absolute',
