@@ -28,7 +28,7 @@ const AnimatedScreen = () => {
             <Title>{"Hello there!\nIt's me, animation!"}</Title>
 
             <CustomText>
-              {`See it finished in your mind before\nyou ever start. I thought today we would do a happy little animation!`}
+              {`See it finished in your mind before\nyou ever start. I thought today \nwe would do a happy\nlittle animation!`}
             </CustomText>
 
             <ArrowDown />
