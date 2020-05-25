@@ -8,7 +8,7 @@ export const theme = {
     dark: '#082F35',
   },
   sizes: {
-    big: 38,
+    big: 32,
     medium: 18,
     regular: 14,
   },

@@ -25,22 +25,20 @@ const AnimatedScreen = () => {
       <PanGestureHandler>
         <Animated.View style={styles.scrollBox}>
           <Animated.View style={styles.primaryScreen}>
-            <Title>{"Hello there! It's\nnew app!"}</Title>
+            <Title>{"Hello there!\nIt's me, animation!"}</Title>
 
             <CustomText>
-              {`See it finished in your mind before\nyou ever start. There he comes. I thought
-        today we would do a happy little animation!`}
+              {`See it finished in your mind before\nyou ever start. I thought today we would do a happy little animation!`}
             </CustomText>
 
             <ArrowDown />
           </Animated.View>
 
           <View style={styles.secondaryScreen}>
-            <Title>{'Another screen'}</Title>
+            <Title>I was transitioned</Title>
 
             <CustomText>
-              There it comes. I thought today we would do a happy little
-              animation!
+              {`There it is.\nA second paragraph\nin this happy little animation!`}
             </CustomText>
 
             <Button>Click me now</Button>
