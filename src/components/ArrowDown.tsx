@@ -20,6 +20,7 @@ const ArrowDown = () => {
 const styles = StyleSheet.create({
   container: {
     padding: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 2,
   },
   arrowImage: {
     width: arrowWidth,

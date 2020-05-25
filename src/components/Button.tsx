@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.05,
     shadowRadius: 2,
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit * 2,
   },
   buttonText: {
     color: theme.colors.dark,
