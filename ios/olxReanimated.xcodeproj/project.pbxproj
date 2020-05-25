@@ -17,11 +17,11 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* olxReanimatedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* olxReanimatedTests.m */; };
+		4BF6C610656A43A0B68F162A /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFE6034F236C4808971B2B0A /* Montserrat-Regular.ttf */; };
 		79D7BA641DE9F96F9818A2FF /* libPods-olxReanimated-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A226592B48593A2FD225EED /* libPods-olxReanimated-tvOS.a */; };
+		9CA1C0E7722148DC8989C425 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F99A3006BAFE4F7E8F6760B9 /* Montserrat-Bold.ttf */; };
 		D7A62783D436BB0D80A68E2C /* libPods-olxReanimated-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42443F0057A10C9F773D2E76 /* libPods-olxReanimated-tvOSTests.a */; };
 		DB46467E85734ED31444DDE6 /* libPods-olxReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E317028C9835FF21273268 /* libPods-olxReanimated.a */; };
-		9CA1C0E7722148DC8989C425 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F99A3006BAFE4F7E8F6760B9 /* Montserrat-Bold.ttf */; };
-		4BF6C610656A43A0B68F162A /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFE6034F236C4808971B2B0A /* Montserrat-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,12 +65,12 @@
 		8BA8397C9F998A8C07B41E4E /* libPods-olxReanimated-olxReanimatedTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-olxReanimated-olxReanimatedTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A44CA876DD2EC758256BB9E6 /* Pods-olxReanimated-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-olxReanimated-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-olxReanimated-tvOS/Pods-olxReanimated-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BDFFFE9D22C54B16DD1E8B77 /* Pods-olxReanimated-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-olxReanimated-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-olxReanimated-tvOSTests/Pods-olxReanimated-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		BFE6034F236C4808971B2B0A /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		D0FD660839BFACEEE9995468 /* Pods-olxReanimated-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-olxReanimated-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-olxReanimated-tvOSTests/Pods-olxReanimated-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F99A3006BAFE4F7E8F6760B9 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		FCC0465BE5A82F21714008F9 /* Pods-olxReanimated-olxReanimatedTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-olxReanimated-olxReanimatedTests.release.xcconfig"; path = "Target Support Files/Pods-olxReanimated-olxReanimatedTests/Pods-olxReanimated-olxReanimatedTests.release.xcconfig"; sourceTree = "<group>"; };
-		F99A3006BAFE4F7E8F6760B9 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BFE6034F236C4808971B2B0A /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,8 +165,16 @@
 				D0FD660839BFACEEE9995468 /* Pods-olxReanimated-tvOSTests.debug.xcconfig */,
 				BDFFFE9D22C54B16DD1E8B77 /* Pods-olxReanimated-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		2EE652078F87436EB8B4576C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F99A3006BAFE4F7E8F6760B9 /* Montserrat-Bold.ttf */,
+				BFE6034F236C4808971B2B0A /* Montserrat-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -202,16 +210,6 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
-		};
-		2EE652078F87436EB8B4576C /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				F99A3006BAFE4F7E8F6760B9 /* Montserrat-Bold.ttf */,
-				BFE6034F236C4808971B2B0A /* Montserrat-Regular.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -304,17 +302,21 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = FS3AQFDB54;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = FS3AQFDB54;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = FS3AQFDB54;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = FS3AQFDB54;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -602,6 +604,8 @@
 			baseConfigurationReference = 88F67D0CED3156EC311BAE90 /* Pods-olxReanimated-olxReanimatedTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				DEVELOPMENT_TEAM = FS3AQFDB54;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -625,7 +629,9 @@
 			baseConfigurationReference = FCC0465BE5A82F21714008F9 /* Pods-olxReanimated-olxReanimatedTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = FS3AQFDB54;
 				INFOPLIST_FILE = olxReanimatedTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -647,6 +653,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FS3AQFDB54;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -659,7 +666,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.dg.olxreanimated;
 				PRODUCT_NAME = olxReanimated;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -674,6 +681,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FS3AQFDB54;
 				INFOPLIST_FILE = olxReanimated/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -681,7 +689,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.dg.olxreanimated;
 				PRODUCT_NAME = olxReanimated;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -699,6 +707,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = FS3AQFDB54;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "olxReanimated-tvOS/Info.plist";
@@ -728,6 +737,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = FS3AQFDB54;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "olxReanimated-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -754,6 +764,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = FS3AQFDB54;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "olxReanimated-tvOSTests/Info.plist";
@@ -782,6 +793,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = FS3AQFDB54;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "olxReanimated-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

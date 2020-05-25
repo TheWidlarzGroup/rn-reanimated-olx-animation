@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {theme} from '../Theme';
 
@@ -9,7 +9,7 @@ const bgDimension = height;
 const borderWidth = height * 0.25;
 
 interface Props {
-  opacity: any;
+  opacity: Animated.Node<number>;
 }
 
 const CircleBg = ({opacity}: Props) => {
