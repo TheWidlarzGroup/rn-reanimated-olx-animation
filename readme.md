@@ -1,5 +1,9 @@
 # SCROLL-TRANSITION ANIMATION with REANIMATED AND GESTURE HANDLER
 
+![](./assets/olx_mov.gif)
+
+![](./assets/olx_reanimated_mov.gif)
+
 ## RUN IT
 
 1. Clone the repo
