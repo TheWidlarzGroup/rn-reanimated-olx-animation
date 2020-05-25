@@ -1,28 +1,26 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
+import React, {useState, useMemo} from 'react';
+import {StyleSheet, Dimensions} from 'react-native';
 import Animated, {
   cond,
   lessThan,
-  multiply,
   greaterThan,
   interpolate,
-  sub,
   set,
   spring,
   startClock,
+  Clock,
   stopClock,
   block,
   add,
   clockRunning,
   and,
   eq,
+  Value,
+  event,
   neq,
   or,
   debug,
-  call,
-  Extrapolate,
   abs,
-  color,
 } from 'react-native-reanimated';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import {theme} from './Theme';
@@ -34,8 +32,6 @@ import ArrowDown from './components/ArrowDown';
 import {interpolateColor} from 'react-native-redash';
 
 const {height} = Dimensions.get('window');
-
-const {Value, event} = Animated;
 
 const expandedTarget = -height * 0.3;
 const dragTreshold = -height * 0.3;
@@ -100,7 +96,6 @@ const runSpring = (
                 and(eq(dragCompensator, 0), lessThan(value, dragTreshold)),
               ),
               [
-                debug('First cond', new Value(0)),
                 set(config.toValue, expandedTarget),
                 set(dragCompensator, expandedTarget),
               ],
@@ -114,21 +109,16 @@ const runSpring = (
                   greaterThan(value, abs(dragTreshold)),
                 ),
               ),
-              [
-                debug('Second cond', new Value(0)),
-                set(config.toValue, 0),
-                set(dragCompensator, 0),
-              ],
+              [set(config.toValue, 0), set(dragCompensator, 0)],
             ),
             debug(`Start clock`, startClock(clock)),
           ],
         ),
-        cond(state.finished, debug(`Stop clock`, stopClock(clock))),
+        cond(state.finished, debug(`Stoped the clock`, stopClock(clock))),
         spring(clock, state, config),
         state.position,
       ],
       [
-        debug('dragY: ', value),
         add(
           dragCompensator,
           interpolate(value, {
@@ -145,41 +135,64 @@ const AnimatedScreen = () => {
   const [dragY] = useState(new Value(0));
   const [dragCompensator] = useState(new Value(0));
   const [velocity] = useState(new Value(0));
-  const [state] = useState(new Value(0));
-  const [clock] = useState(new Animated.Clock());
+  const [dragState] = useState(new Value(0));
+  const [clock] = useState(new Clock());
 
-  const spring = runSpring(dragY, dragCompensator, velocity, clock, state);
+  const spring = useMemo(
+    () => runSpring(dragY, dragCompensator, velocity, clock, dragState),
+    [],
+  );
 
-  const springReversed = interpolate(spring, {
-    inputRange: [expandedTarget, 0],
-    outputRange: [0, -expandedTarget * 0.5],
-  });
+  const springReversed = useMemo(
+    () =>
+      interpolate(spring, {
+        inputRange: [expandedTarget, 0],
+        outputRange: [0, -expandedTarget * 0.5],
+      }),
+    [],
+  );
 
-  const opacity = interpolate(spring, {
-    inputRange: [expandedTarget, 0],
-    outputRange: [1, 0],
-  });
+  const opacity = useMemo(
+    () =>
+      interpolate(spring, {
+        inputRange: [expandedTarget, 0],
+        outputRange: [1, 0],
+      }),
+    [],
+  );
 
-  const opacityReversed = interpolate(spring, {
-    inputRange: [expandedTarget, 0],
-    outputRange: [0, 1],
-  });
+  const opacityReversed = useMemo(
+    () =>
+      interpolate(spring, {
+        inputRange: [expandedTarget, 0],
+        outputRange: [0, 1],
+      }),
+    [],
+  );
 
-  const scale = interpolate(spring, {
-    inputRange: [expandedTarget, 0],
-    outputRange: [1, 0],
-  });
+  const scale = useMemo(
+    () =>
+      interpolate(spring, {
+        inputRange: [expandedTarget, 0],
+        outputRange: [1, 0],
+      }),
+    [],
+  );
 
-  const backgroundColor = interpolateColor(spring, {
-    inputRange: [expandedTarget, 0],
-    outputRange: [theme.colors.white, theme.colors.light],
-  });
+  const backgroundColor = useMemo(
+    () =>
+      interpolateColor(spring, {
+        inputRange: [expandedTarget, 0],
+        outputRange: [theme.colors.white, theme.colors.light],
+      }),
+    [],
+  );
 
   const dragHandler = event([
     {
       nativeEvent: {
         translationY: dragY,
-        state: state,
+        state: dragState,
         velocityY: velocity,
       },
     },
