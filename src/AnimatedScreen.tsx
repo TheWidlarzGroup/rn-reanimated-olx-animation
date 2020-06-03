@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Image, Dimensions} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
@@ -8,10 +8,25 @@ import Title from './components/Title';
 import CustomText from './components/CustomText';
 import Button from './components/Button';
 import ArrowDown from './components/ArrowDown';
+import {event, Value} from 'react-native-reanimated';
 
 const {height} = Dimensions.get('window');
 
 const AnimatedScreen = () => {
+  const [dragY] = useState(new Value(0));
+  const [velocity] = useState(new Value(0));
+  const [dragState] = useState(new Value(0));
+
+  const dragHandler = event([
+    {
+      nativeEvent: {
+        translationY: dragY,
+        state: dragState,
+        velocityY: velocity,
+      },
+    },
+  ]);
+
   return (
     <View style={styles.content}>
       <CircleBg />
@@ -22,9 +37,12 @@ const AnimatedScreen = () => {
         source={require('../assets/xBg.png')}
       />
 
-      <PanGestureHandler>
+      <PanGestureHandler
+        onGestureEvent={dragHandler}
+        onHandlerStateChange={dragHandler}>
         <Animated.View style={styles.scrollBox}>
-          <Animated.View style={styles.primaryScreen}>
+          <Animated.View
+            style={[styles.primaryScreen, {transform: [{translateY: dragY}]}]}>
             <Title>{"Hello there!\nIt's me, animation!"}</Title>
 
             <CustomText>
