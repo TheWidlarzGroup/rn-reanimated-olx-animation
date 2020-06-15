@@ -1,14 +1,78 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Image, Dimensions} from 'react-native';
-import Animated from 'react-native-reanimated';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import Animated, {
+  event,
+  Value,
+  block,
+  stopClock,
+  startClock,
+  debug,
+  set,
+  clockRunning,
+  eq,
+  cond,
+  spring,
+  Clock,
+  or,
+} from 'react-native-reanimated';
+import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import {theme} from './Theme';
 import CircleBg from './components/CircleBg';
 import Title from './components/Title';
 import CustomText from './components/CustomText';
 import Button from './components/Button';
 import ArrowDown from './components/ArrowDown';
-import {event, Value} from 'react-native-reanimated';
+
+const runSpring = (
+  value: Animated.Value<number>,
+  vel: Animated.Adaptable<number>,
+  clock: Animated.Clock,
+  dragState: Animated.Value<number>,
+) => {
+  const state = {
+    finished: new Value(0),
+    velocity: new Value(0),
+    position: new Value(0),
+    time: new Value(0),
+  };
+
+  const config = {
+    toValue: new Value(0),
+    damping: 10,
+    mass: 0.4,
+    stiffness: 50,
+    overshootClamping: false,
+    restSpeedThreshold: 0.001,
+    restDisplacementThreshold: 0.001,
+  };
+
+  return block([
+    cond(or(eq(dragState, State.BEGAN), eq(dragState, State.ACTIVE)), [
+      stopClock(clock),
+    ]),
+    cond(
+      eq(dragState, State.END),
+      [
+        cond(
+          clockRunning(clock),
+          [],
+          [
+            set(state.finished, 0),
+            set(state.time, 0),
+            set(state.position, value),
+            set(state.velocity, vel),
+            set(config.toValue, 0),
+            startClock(clock),
+          ],
+        ),
+        cond(state.finished, stopClock(clock)),
+        spring(clock, state, config),
+        state.position,
+      ],
+      [value],
+    ),
+  ]);
+};
 
 const {height} = Dimensions.get('window');
 
@@ -16,6 +80,9 @@ const AnimatedScreen = () => {
   const [dragY] = useState(new Value(0));
   const [velocity] = useState(new Value(0));
   const [dragState] = useState(new Value(0));
+  const [clock] = useState(new Clock());
+
+  const spring = runSpring(dragY, velocity, clock, dragState);
 
   const dragHandler = event([
     {
@@ -42,7 +109,7 @@ const AnimatedScreen = () => {
         onHandlerStateChange={dragHandler}>
         <Animated.View style={styles.scrollBox}>
           <Animated.View
-            style={[styles.primaryScreen, {transform: [{translateY: dragY}]}]}>
+            style={[styles.primaryScreen, {transform: [{translateY: spring}]}]}>
             <Title>{"Hello there!\nIt's me, animation!"}</Title>
 
             <CustomText>
