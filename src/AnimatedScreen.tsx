@@ -14,6 +14,12 @@ import Animated, {
   spring,
   Clock,
   or,
+  add,
+  lessThan,
+  and,
+  greaterThan,
+  abs,
+  neq,
 } from 'react-native-reanimated';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import {theme} from './Theme';
@@ -23,8 +29,15 @@ import CustomText from './components/CustomText';
 import Button from './components/Button';
 import ArrowDown from './components/ArrowDown';
 
+const {height} = Dimensions.get('window');
+
+const expandedTarget = -height * 0.3;
+const dragTreshold = -height * 0.3;
+const velocityTrigerringTreshold = -2000;
+
 const runSpring = (
   value: Animated.Value<number>,
+  dragCompensator: Animated.Value<number>,
   vel: Animated.Adaptable<number>,
   clock: Animated.Clock,
   dragState: Animated.Value<number>,
@@ -59,9 +72,29 @@ const runSpring = (
           [
             set(state.finished, 0),
             set(state.time, 0),
-            set(state.position, value),
+            set(state.position, add(value, dragCompensator)),
             set(state.velocity, vel),
-            set(config.toValue, 0),
+            set(config.toValue, dragCompensator),
+            cond(
+              or(
+                lessThan(vel, velocityTrigerringTreshold),
+                and(eq(dragCompensator, 0), lessThan(value, dragTreshold)),
+              ),
+              [
+                set(config.toValue, expandedTarget),
+                set(dragCompensator, expandedTarget),
+              ],
+            ),
+            cond(
+              or(
+                greaterThan(vel, abs(velocityTrigerringTreshold)),
+                and(
+                  neq(dragCompensator, 0),
+                  greaterThan(value, abs(dragTreshold)),
+                ),
+              ),
+              [set(config.toValue, 0), set(dragCompensator, 0)],
+            ),
             startClock(clock),
           ],
         ),
@@ -69,20 +102,19 @@ const runSpring = (
         spring(clock, state, config),
         state.position,
       ],
-      [value],
+      [add(value, dragCompensator)],
     ),
   ]);
 };
 
-const {height} = Dimensions.get('window');
-
 const AnimatedScreen = () => {
   const [dragY] = useState(new Value(0));
+  const [dragCompensator] = useState(new Value(0));
   const [velocity] = useState(new Value(0));
   const [dragState] = useState(new Value(0));
   const [clock] = useState(new Clock());
 
-  const spring = runSpring(dragY, velocity, clock, dragState);
+  const spring = runSpring(dragY, dragCompensator, velocity, clock, dragState);
 
   const dragHandler = event([
     {
