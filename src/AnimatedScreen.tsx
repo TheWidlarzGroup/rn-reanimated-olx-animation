@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Image, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import Animated, {
   event,
   Value,
   block,
   stopClock,
   startClock,
-  debug,
   set,
   clockRunning,
   eq,
@@ -29,6 +28,7 @@ import Title from './components/Title';
 import CustomText from './components/CustomText';
 import Button from './components/Button';
 import ArrowDown from './components/ArrowDown';
+import {interpolateColor} from 'react-native-redash';
 
 const {height} = Dimensions.get('window');
 
@@ -149,6 +149,16 @@ const AnimatedScreen = () => {
     outputRange: [0, 1],
   });
 
+  const scale = interpolate(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [1, 0],
+  });
+
+  const backgroundColor = interpolateColor(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [theme.colors.white, theme.colors.light],
+  });
+
   const dragHandler = event([
     {
       nativeEvent: {
@@ -160,12 +170,12 @@ const AnimatedScreen = () => {
   ]);
 
   return (
-    <View style={styles.content}>
+    <Animated.View style={[styles.content, {backgroundColor}]}>
       <CircleBg opacity={opacityReversed} />
 
       <Animated.Image
         resizeMode="contain"
-        style={[styles.xBg, {opacity}]}
+        style={[styles.xBg, {opacity, transform: [{scale}]}]}
         source={require('../assets/xBg.png')}
       />
 
@@ -202,7 +212,7 @@ const AnimatedScreen = () => {
           </Animated.View>
         </Animated.View>
       </PanGestureHandler>
-    </View>
+    </Animated.View>
   );
 };
 
