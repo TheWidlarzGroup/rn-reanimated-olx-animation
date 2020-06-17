@@ -20,6 +20,7 @@ import Animated, {
   greaterThan,
   abs,
   neq,
+  interpolate,
 } from 'react-native-reanimated';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import {theme} from './Theme';
@@ -72,7 +73,16 @@ const runSpring = (
           [
             set(state.finished, 0),
             set(state.time, 0),
-            set(state.position, add(value, dragCompensator)),
+            set(
+              state.position,
+              add(
+                dragCompensator,
+                interpolate(value, {
+                  inputRange: [-2, 2],
+                  outputRange: [-0.5, 0.5],
+                }),
+              ),
+            ),
             set(state.velocity, vel),
             set(config.toValue, dragCompensator),
             cond(
@@ -102,7 +112,15 @@ const runSpring = (
         spring(clock, state, config),
         state.position,
       ],
-      [add(value, dragCompensator)],
+      [
+        add(
+          dragCompensator,
+          interpolate(value, {
+            inputRange: [-2, 2],
+            outputRange: [-0.5, 0.5],
+          }),
+        ),
+      ],
     ),
   ]);
 };
