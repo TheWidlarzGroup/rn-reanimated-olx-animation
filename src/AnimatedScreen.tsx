@@ -134,6 +134,21 @@ const AnimatedScreen = () => {
 
   const spring = runSpring(dragY, dragCompensator, velocity, clock, dragState);
 
+  const springReversed = interpolate(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [0, -expandedTarget * 0.5],
+  });
+
+  const opacity = interpolate(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [1, 0],
+  });
+
+  const opacityReversed = interpolate(spring, {
+    inputRange: [expandedTarget, 0],
+    outputRange: [0, 1],
+  });
+
   const dragHandler = event([
     {
       nativeEvent: {
@@ -146,11 +161,11 @@ const AnimatedScreen = () => {
 
   return (
     <View style={styles.content}>
-      <CircleBg />
+      <CircleBg opacity={opacityReversed} />
 
-      <Image
+      <Animated.Image
         resizeMode="contain"
-        style={styles.xBg}
+        style={[styles.xBg, {opacity}]}
         source={require('../assets/xBg.png')}
       />
 
@@ -159,7 +174,10 @@ const AnimatedScreen = () => {
         onHandlerStateChange={dragHandler}>
         <Animated.View style={styles.scrollBox}>
           <Animated.View
-            style={[styles.primaryScreen, {transform: [{translateY: spring}]}]}>
+            style={[
+              styles.primaryScreen,
+              {transform: [{translateY: spring}], opacity: opacityReversed},
+            ]}>
             <Title>{"Hello there!\nIt's me, animation!"}</Title>
 
             <CustomText>
@@ -169,7 +187,11 @@ const AnimatedScreen = () => {
             <ArrowDown />
           </Animated.View>
 
-          <View style={styles.secondaryScreen}>
+          <Animated.View
+            style={[
+              styles.secondaryScreen,
+              {transform: [{translateY: springReversed}], opacity},
+            ]}>
             <Title>I was transitioned</Title>
 
             <CustomText>
@@ -177,7 +199,7 @@ const AnimatedScreen = () => {
             </CustomText>
 
             <Button>Click me now</Button>
-          </View>
+          </Animated.View>
         </Animated.View>
       </PanGestureHandler>
     </View>
