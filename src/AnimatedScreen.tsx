@@ -35,7 +35,7 @@ const {height} = Dimensions.get('window');
 
 const expandedTarget = -height * 0.3;
 const dragTreshold = -height * 0.3;
-const velocityTrigerringTreshold = -2000;
+const velocityTrigerringThreshold = -2000;
 
 const runSpring = (
   value: Animated.Value<number>,
@@ -92,7 +92,7 @@ const runSpring = (
             // IF LESS THAN TRESHOLD and dragComp === 0
             cond(
               or(
-                lessThan(vel, velocityTrigerringTreshold),
+                lessThan(vel, velocityTrigerringThreshold),
                 and(eq(dragCompensator, 0), lessThan(value, dragTreshold)),
               ),
               [
@@ -103,7 +103,7 @@ const runSpring = (
             // IF MORE THAN TRESHOLD and dragComp !== 0
             cond(
               or(
-                greaterThan(vel, abs(velocityTrigerringTreshold)),
+                greaterThan(vel, abs(velocityTrigerringThreshold)),
                 and(
                   neq(dragCompensator, 0),
                   greaterThan(value, abs(dragTreshold)),
