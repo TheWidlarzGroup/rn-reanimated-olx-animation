@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Image, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import Animated, {
   event,
   Value,
   block,
   stopClock,
   startClock,
-  debug,
   set,
   clockRunning,
   eq,
