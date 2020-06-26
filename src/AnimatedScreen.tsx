@@ -138,14 +138,14 @@ const AnimatedScreen = () => {
   const [dragState] = useState(new Value(0));
   const [clock] = useState(new Clock());
 
-  const spring = useMemo(
+  const animation = useMemo(
     () => runSpring(dragY, dragCompensator, velocity, clock, dragState),
     [],
   );
 
-  const springReversed = useMemo(
+  const animationReversed = useMemo(
     () =>
-      interpolate(spring, {
+      interpolate(animation, {
         inputRange: [expandedTarget, 0],
         outputRange: [0, -expandedTarget * 0.5],
       }),
@@ -154,7 +154,7 @@ const AnimatedScreen = () => {
 
   const opacity = useMemo(
     () =>
-      interpolate(spring, {
+      interpolate(animation, {
         inputRange: [expandedTarget, 0],
         outputRange: [1, 0],
       }),
@@ -163,7 +163,7 @@ const AnimatedScreen = () => {
 
   const opacityReversed = useMemo(
     () =>
-      interpolate(spring, {
+      interpolate(animation, {
         inputRange: [expandedTarget, 0],
         outputRange: [0, 1],
       }),
@@ -172,7 +172,7 @@ const AnimatedScreen = () => {
 
   const scale = useMemo(
     () =>
-      interpolate(spring, {
+      interpolate(animation, {
         inputRange: [expandedTarget, 0],
         outputRange: [1, 0],
       }),
@@ -181,7 +181,7 @@ const AnimatedScreen = () => {
 
   const backgroundColor = useMemo(
     () =>
-      interpolateColor(spring, {
+      interpolateColor(animation, {
         inputRange: [expandedTarget, 0],
         outputRange: [theme.colors.white, theme.colors.light],
       }),
@@ -215,7 +215,7 @@ const AnimatedScreen = () => {
           <Animated.View
             style={[
               styles.primaryScreen,
-              {transform: [{translateY: spring}], opacity: opacityReversed},
+              {transform: [{translateY: animation}], opacity: opacityReversed},
             ]}>
             <Title>{"Hello there!\nIt's me, animation!"}</Title>
 
@@ -229,7 +229,7 @@ const AnimatedScreen = () => {
           <Animated.View
             style={[
               styles.secondaryScreen,
-              {transform: [{translateY: springReversed}], opacity},
+              {transform: [{translateY: animationReversed}], opacity},
             ]}>
             <Title>I was transitioned</Title>
 
