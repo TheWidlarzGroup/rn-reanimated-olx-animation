@@ -132,29 +132,35 @@ const AnimatedScreen = () => {
   const [dragState] = useState(new Value(0));
   const [clock] = useState(new Clock());
 
-  const spring = runSpring(dragY, dragCompensator, velocity, clock, dragState);
+  const animation = runSpring(
+    dragY,
+    dragCompensator,
+    velocity,
+    clock,
+    dragState,
+  );
 
-  const springReversed = interpolate(spring, {
+  const animationReversed = interpolate(animation, {
     inputRange: [expandedTarget, 0],
     outputRange: [0, -expandedTarget * 0.5],
   });
 
-  const opacity = interpolate(spring, {
+  const opacity = interpolate(animation, {
     inputRange: [expandedTarget, 0],
     outputRange: [1, 0],
   });
 
-  const opacityReversed = interpolate(spring, {
+  const opacityReversed = interpolate(animation, {
     inputRange: [expandedTarget, 0],
     outputRange: [0, 1],
   });
 
-  const scale = interpolate(spring, {
+  const scale = interpolate(animation, {
     inputRange: [expandedTarget, 0],
     outputRange: [1, 0],
   });
 
-  const backgroundColor = interpolateColor(spring, {
+  const backgroundColor = interpolateColor(animation, {
     inputRange: [expandedTarget, 0],
     outputRange: [theme.colors.white, theme.colors.light],
   });
@@ -186,7 +192,7 @@ const AnimatedScreen = () => {
           <Animated.View
             style={[
               styles.primaryScreen,
-              {transform: [{translateY: spring}], opacity: opacityReversed},
+              {transform: [{translateY: animation}], opacity: opacityReversed},
             ]}>
             <Title>{"Hello there!\nIt's me, animation!"}</Title>
 
@@ -200,7 +206,7 @@ const AnimatedScreen = () => {
           <Animated.View
             style={[
               styles.secondaryScreen,
-              {transform: [{translateY: springReversed}], opacity},
+              {transform: [{translateY: animationReversed}], opacity},
             ]}>
             <Title>I was transitioned</Title>
 
