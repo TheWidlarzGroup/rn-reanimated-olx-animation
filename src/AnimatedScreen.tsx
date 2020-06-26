@@ -132,7 +132,13 @@ const AnimatedScreen = () => {
   const [dragState] = useState(new Value(0));
   const [clock] = useState(new Clock());
 
-  const spring = runSpring(dragY, dragCompensator, velocity, clock, dragState);
+  const animation = runSpring(
+    dragY,
+    dragCompensator,
+    velocity,
+    clock,
+    dragState,
+  );
 
   const dragHandler = event([
     {
@@ -159,7 +165,10 @@ const AnimatedScreen = () => {
         onHandlerStateChange={dragHandler}>
         <Animated.View style={styles.scrollBox}>
           <Animated.View
-            style={[styles.primaryScreen, {transform: [{translateY: spring}]}]}>
+            style={[
+              styles.primaryScreen,
+              {transform: [{translateY: animation}]},
+            ]}>
             <Title>{"Hello there!\nIt's me, animation!"}</Title>
 
             <CustomText>
